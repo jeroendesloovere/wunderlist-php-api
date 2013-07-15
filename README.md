@@ -15,17 +15,17 @@ Currently supported methods:
 - Get all tasks
 - Get all lists
 - Get all tasks within a list
+- Add a list
+- Add a task
 
 Subtasks are automatically added to their parent instead as a single task
 By setting a parameter to the functions for tasks you can specify if completed tasks should be hidden or not.
 
 
 Future - but soon enough - functions:
-- Create a task
 - Set due date for a task
 - Add notes to a task
 - Delete a task
-- Add list
 - Delete list
 - Get reminders
 - Set reminder for a task
