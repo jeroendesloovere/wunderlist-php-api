@@ -173,6 +173,57 @@
 		}
 		
 		/**
+		 * Add a list to the Wunderlist account
+		 *
+		 * @param string $title
+		 * @return bool|array
+		 */
+		public function addList($title)
+		{
+			if( $title == "" )
+			{
+				return false;
+			}
+			else
+			{
+				return $this->call('/me/lists', 'post', array('title' => $title));	
+			}
+		}
+		
+		/**
+		 * Add a task to a list
+		 *
+		 * @param string $title
+		 * @param string $list_id
+		 * @param date $due_date (format "YYYY-mm-ddTHH:ii:ssZ")
+		 * @param bool $starred
+		 */
+		public function addTask($title, $list_id, $due_date='', $starred=false)
+		{
+			if( $title == "" || $list_id == "" )
+			{
+				return false;
+			}
+			else
+			{
+				// Set data for the call
+				$data = array(
+					'title' => $title,
+					'list_id' => $list_id,
+					'starred' => $starred == true ? 1 : 0
+				);
+				
+				// Add due date of found
+				if( $due_date != "" )
+				{
+					$data['due_date'] = date("Y-m-d\TH:i:s\Z", strtotime($due_date));
+				}	
+				
+				return $this->call('/me/tasks', 'post', $data);
+			}
+		}
+		
+		/**
 		 * performs the call to the Wunderlist API
 		 *
 		 * @param string $action
@@ -211,7 +262,7 @@
 			$output = curl_exec($ch);
 			
 			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if($httpCode != 200)
+			if($httpCode != 200 && $httpCode != 201)
 			{
 				return false;	
 			}
