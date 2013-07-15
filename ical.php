@@ -1,5 +1,8 @@
 <?php
 
+	// Login Credits
+	require_once("../credits.php");
+
 	// Header
 	header('Content-Type: text/html; charset=utf-8');
 
@@ -7,7 +10,7 @@
 	require_once('api.class.php');
 	
 	// Setup Wunderlist
-	$wunderlist = new Wunderlist("joshua@pendo.nl", "WunderlistPHP");
+	$wunderlist = new Wunderlist($wlUser, $wlPass);
 		
 	// Set iCal Date
 	define('DATE_ICAL', 'Ymd\THis');
