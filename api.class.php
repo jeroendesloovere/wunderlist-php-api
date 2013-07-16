@@ -6,7 +6,7 @@
 	 * Purpose: communicate with Wunderlist2 API
 	 *
 	 * @author		Joshua de Gier
-	 * @version		0.1b	15/07/2013
+	 * @version		1.00	17/07/2013
 	 */
 
 	class Wunderlist
@@ -176,7 +176,8 @@
 		 * Add a list to the Wunderlist account
 		 *
 		 * @param string $title
-		 * @return bool|array
+		 *
+		 * @return array|bool
 		 */
 		public function addList($title)
 		{
@@ -197,6 +198,8 @@
 		 * @param string $list_id
 		 * @param date $due_date (format "YYYY-mm-dd")
 		 * @param bool $starred
+		 *
+		 * @return array|bool
 		 */
 		public function addTask($title, $list_id, $due_date='', $starred=false)
 		{
@@ -228,6 +231,8 @@
 		 *
 		 * @param string $task_id
 		 * @param string $note
+		 *
+		 * @return array|bool
 		 */
 		public function addNoteToTask($task_id, $note)
 		{
@@ -254,6 +259,8 @@
 		 * @param bool $recurring
 		 * @param int $recurring_interval_num
 		 * @param string $recurring_interval_type
+		 *
+		 * @return array|bool
 		 */
 		public function addDueDateToTask($task_id, $due_date, $recurring = false, $interval_num = 0, $interval_type = 'none')
 		{
@@ -299,6 +306,8 @@
 		 * delete a task
 		 *
 		 * @param string $task_id
+		 *
+		 * @return array|bool
 		 */
 		public function deleteTask($task_id)
 		{
@@ -316,6 +325,8 @@
 		 * delete a list
 		 *
 		 * @param string $list_id
+		 *
+		 * @return array|bool
 		 */
 		public function deleteList($list_id)
 		{
@@ -331,6 +342,8 @@
 		
 		/**
 		 * get reminders that are set
+		 *
+		 * @return array|bool
 		 */
 		public function getReminders()
 		{
@@ -358,6 +371,8 @@
 		 *
 		 * @param string $task_id
 		 * @param date $reminder_date
+		 *
+		 * @return array|bool
 		 */
 		public function addReminderToTask($task_id, $reminder_date)
 		{
@@ -376,7 +391,6 @@
 				return $this->call('/me/reminders', 'post', $data);
 			}
 		}
-		 
 		
 		/**
 		 * performs the call to the Wunderlist API
@@ -385,7 +399,7 @@
 		 * @param string $method
 		 * @param array $data
 		 *
-		 * @return array
+		 * @return mixed (based on the call that is executed)
 		 */
 		private function call($action, $method, $data)
 		{	
