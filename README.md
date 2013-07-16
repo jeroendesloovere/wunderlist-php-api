@@ -4,11 +4,14 @@ Wunderlist2-PHP-Wrapper
 A PHP Wrapper for Wunderlist2 API
 
 Thanks goes out to these two Github projects, they gave me insight in the working of the Wunderlist API and the ability to get the functions working.
-https://github.com/bsmt/wunderpy
-https://github.com/rushis/Wunderlist2ApiJS
+- https://github.com/bsmt/wunderpy
+- https://github.com/rushis/Wunderlist2ApiJS
 
 Extra's:
-ical.php: this file generates a valid ical file which uses the due dates of tasks to generate a "to-do" calendar. For mac users: https://www.apple.com/findouthow/mac/#subscribeical
+ical.php: this file generates a valid ical file which uses the due dates of tasks to generate a "to-do" calendar. 
+- For mac agenda users: https://www.apple.com/findouthow/mac/#subscribeical
+- For Google calendar users: https://support.google.com/calendar/answer/37118?hl=en
+- For other apps/software: check the ability to (auto) import ical files to your app/software
 
 Currently supported methods:
 - Login to Wunderlist API
@@ -20,7 +23,6 @@ Currently supported methods:
 
 Subtasks are automatically added to their parent instead as a single task
 By setting a parameter to the functions for tasks you can specify if completed tasks should be hidden or not.
-
 
 Future - but soon enough - functions:
 - Set due date for a task
