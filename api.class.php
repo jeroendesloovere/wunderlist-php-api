@@ -231,7 +231,7 @@
 		 */
 		public function addNoteToTask($task_id, $note)
 		{
-			if( $task_id == "" || $title == "" )
+			if( $task_id == "" || $note == "" )
 			{
 				return false;
 			}
@@ -239,7 +239,10 @@
 			{
 				// Set data for the call
 				$data = array(
-					'note' => $note
+					'id' => $task_id,
+					'note' => $note,
+					'type' => 'Task',
+					'length' => strlen($note)
 				);
 				
 				return $this->call('/'.$task_id, 'put', $data);
@@ -270,7 +273,7 @@
 			// Set request type for PUT
 			if(strtolower($method) == 'put')
 			{
-				curl_setopt($ch, CURLOPT_PUT, true );	
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');	
 			}
 			
 			// Set request type for DELETE
@@ -303,11 +306,12 @@
 			curl_close($ch);
 			
 			// get / put / delete requests should have HTTP Code 200 OK
-			if($httpCode == 200 && strtolower($method) != 'post')
+			// only exception is the login method, which returns HTTP Code 200 OK
+			if($httpCode == 200 && (strtolower($method) != 'post' || $action == '/login'))
 			{
 				return json_decode($output, true);
 			}
-			// post requests should have HTTP Code 201 Created
+			// all non-login post requests should have HTTP Code 201 Created
 			elseif($httpCode == 201 && strtolower($method) == 'post')
 			{
 				return json_decode($output, true);
@@ -315,7 +319,14 @@
 			// If the HTTP code did not match, than the request failed
 			else
 			{
-				return false;	
+				// This can be used to handle errors within the wrapper
+				return array(
+					'action' => $action,
+					'method' => $method,
+					'data' => serialize($data),
+					'httpCode' => $httpCode,
+					'output' => $output
+				);
 			}
 						
 		}
