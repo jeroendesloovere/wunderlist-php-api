@@ -4,9 +4,9 @@
 	include_once('init.php');
 	
 	// Demo data
-	$task_id = "ACPtABZ9y-Q";
+	$task_id = "ACPtABaOO3k";
 	// Use \n to get a newline within the note 
-	$note = "Here goes the note that you want to add to your wunderlist\n\nTest!";
+	$note = "New note to this task";
 	
 	// Add the new task
 	$addNoteToTask = $wunderlist->addNoteToTask($task_id, $note);

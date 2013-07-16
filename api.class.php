@@ -195,7 +195,7 @@
 		 *
 		 * @param string $title
 		 * @param string $list_id
-		 * @param date $due_date (format "YYYY-mm-ddTHH:ii:ssZ")
+		 * @param date $due_date (format "YYYY-mm-dd")
 		 * @param bool $starred
 		 */
 		public function addTask($title, $list_id, $due_date='', $starred=false)
@@ -216,7 +216,7 @@
 				// Add due date of found
 				if( $due_date != "" )
 				{
-					$data['due_date'] = date("Y-m-d\TH:i:s\Z", strtotime($due_date));
+					$data['due_date'] = date("Y-m-d", strtotime($due_date));
 				}	
 				
 				return $this->call('/me/tasks', 'post', $data);
@@ -239,15 +239,144 @@
 			{
 				// Set data for the call
 				$data = array(
-					'id' => $task_id,
-					'note' => $note,
-					'type' => 'Task',
-					'length' => strlen($note)
+					'note' => $note
 				);
 				
 				return $this->call('/'.$task_id, 'put', $data);
 			}
 		}
+		
+		/**
+		 * set a due date for a task, optional: recurring
+		 *
+		 * @param string $task_id
+		 * @param date $due_date
+		 * @param bool $recurring
+		 * @param int $recurring_interval_num
+		 * @param string $recurring_interval_type
+		 */
+		public function addDueDateToTask($task_id, $due_date, $recurring = false, $interval_num = 0, $interval_type = 'none')
+		{
+			switch($interval_type)
+			{
+				case 'days':$interval_type='day';break;
+				case 'weeks':$interval_type='week';break;
+				case 'months':$interval_type='month';break;
+				case 'years':$interval_type='year';break;
+				default:$interval_type=false;break;
+			}
+			
+			if( $task_id == "" || $due_date == "" )
+			{
+				return false;
+			}
+			else
+			{	
+				$data = array(
+					'due_date' => date("Y-m-d", strtotime($due_date))
+				);
+				
+				// If the task is recurring, set the interval
+				if( $recurring )
+				{
+					if( !$interval_type || intval($interval_num) == 0 )
+					{
+						return false;
+					}
+					else
+					{
+						$data['recurrence_count'] = intval($interval_num);
+						$data['recurrence_type'] = $interval_type;	
+					}
+				}
+				
+				return $this->call('/'.$task_id, 'put', $data);
+			}
+			
+		}
+		
+		/**
+		 * delete a task
+		 *
+		 * @param string $task_id
+		 */
+		public function deleteTask($task_id)
+		{
+			if( $task_id == "" )
+			{
+				return false;
+			} 
+			else
+			{
+				return $this->call('/'.$task_id, 'delete', array());
+			}
+		}
+		
+		/**
+		 * delete a list
+		 *
+		 * @param string $list_id
+		 */
+		public function deleteList($list_id)
+		{
+			if( $list_id == "" )
+			{
+				return false;
+			} 
+			else
+			{
+				return $this->call('/'.$list_id, 'delete', array());
+			}
+		}
+		
+		/**
+		 * get reminders that are set
+		 */
+		public function getReminders()
+		{
+			// Get all tasks
+			if($this->tasks == false)
+			{
+				$this->getTasks();	
+			}
+			
+			// Get the reminders
+			$reminders = $this->call('/me/reminders', 'get', array());
+			
+			// Loop reminders to add task data
+			foreach($reminders as $key => $data)
+			{
+				$reminders[$key]['task'] = $this->tasks[ $data['task_id'] ];	
+			}
+			
+			// Return the reminders
+			return $reminders;
+		}
+		
+		/**
+		 * add a reminder to a task
+		 *
+		 * @param string $task_id
+		 * @param date $reminder_date
+		 */
+		public function addReminderToTask($task_id, $reminder_date)
+		{
+			if( $task_id == "" || $reminder_date == "" )
+			{
+				return false;
+			}
+			else
+			{
+				// Set data for the call
+				$data = array(
+					'task_id' => $task_id,
+					'date' => date("Y-m-d\TH:i:s\Z", strtotime($reminder_date))
+				);
+				
+				return $this->call('/me/reminders', 'post', $data);
+			}
+		}
+		 
 		
 		/**
 		 * performs the call to the Wunderlist API
@@ -259,41 +388,56 @@
 		 * @return array
 		 */
 		private function call($action, $method, $data)
-		{
+		{	
+			// Start with an empty set of headers
+			$headers = array();
 			
 			$ch = curl_init($this->api_url.$action);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
 			
+			// Pass data?
+			if( is_array($data) && count($data) > 0 )
+			{
+				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data) );
+			}
+			
 			// Set request type for POST
-			if(strtolower($method) == 'post')
+			if( strtolower($method) == 'post' )
 			{
 				curl_setopt($ch, CURLOPT_POST, true );
 			}
 			
 			// Set request type for PUT
-			if(strtolower($method) == 'put')
+			if( strtolower($method) == 'put' )
 			{
-				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');	
+				// Set custom request to put
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
+				
+				// Data needs to be send as json
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data) );	
+				
+				// Set header content-type to application/json
+				$headers[] = 'content-type: application/json';
+				
+				// Set header Content-Lenght to the json encoded length
+				$headers[] = 'Content-Length: '.strlen(json_encode($data));
 			}
 			
 			// Set request type for DELETE
-			if(strtolower($method) == 'delete')
+			if( strtolower($method) == 'delete' )
 			{
 				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');	
 			}
 			
-			// Pass data?
-			if(is_array($data) && count($data) > 0)
+			// Send authtoken if set
+			if( $this->authtoken != false )
 			{
-				curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data) );
+				$headers[] = 'authorization: Bearer '.$this->authtoken; 
 			}
 			
-			// Send authtoken if set
-			if($this->authtoken != false)
+			// Send headers with the request
+			if( count($headers) > 0 ) 
 			{
-				$headers = array(
-					'authorization: Bearer '.$this->authtoken
-				);
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);	
 			}
 			

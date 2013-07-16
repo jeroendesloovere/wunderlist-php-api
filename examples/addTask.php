@@ -4,9 +4,10 @@
 	include_once('init.php');
 	
 	// Demo data (NOTE: due_date = ISO format Y-m-dTH:i:sZ
-	$title = "New Task";
-	$list_id = "ABPtAATGbYg";
-	$due_date = date("Y-m-d\TH:i:s\Z", mktime()+(60*60*24));
+	$title = "New Task #2";
+	$list_id = "ABPtAATIHNM";
+	//$due_date = date("Y-m-d", mktime()+(60*60*24));
+	$due_date = false;
 	$starred = false;
 	
 	// Add the new task
