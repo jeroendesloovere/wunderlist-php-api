@@ -29,3 +29,10 @@ Future - but soon enough - functions:
 - Delete list
 - Get reminders
 - Set reminder for a task
+
+After the basic functionality I will add some more advanced filtering such as:
+- Get tasks for today
+- Get tasks for this week
+- Get all tasks that are overdue
+- Filter tasklist by due date
+- Filter tasklist by starred tasks
