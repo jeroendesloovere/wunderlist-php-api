@@ -2,6 +2,7 @@ Wunderlist2-PHP-Wrapper
 =======================
 
 A PHP Wrapper for Wunderlist2 API
+- Current version: 1.00
 
 Thanks goes out to these two Github projects, they gave me insight in the working of the Wunderlist API and the ability to get the functions working.
 - https://github.com/bsmt/wunderpy
@@ -15,18 +16,18 @@ ical.php: this file generates a valid ical file which uses the due dates of task
 
 Currently supported methods (Examples are included in the /examples/ folder)
 
-- Login to Wunderlist API (16/07/2013)
-- Get all tasks (16/07/2013)
-- Get all lists (16/07/2013)
-- Get all tasks within a list (16/07/2013)
-- Add a list (17/07/2013)
-- Add a task (17/07/2013)
-- Set due date for a task (17/07/2013)
-- Add notes to a task (17/07/2013)
-- Delete a task (17/07/2013)
-- Delete list (17/07/2013)
-- Get reminders (17/07/2013)
-- Set reminder for a task (17/07/2013)
+- Login to Wunderlist API (15/07/2013 - v0.1)
+- Get all tasks (15/07/2013 - v0.1)
+- Get all lists (15/07/2013 - v0.1)
+- Get all tasks within a list (15/07/2013 - v0.1)
+- Add a list (16/07/2013 - v0.2)
+- Add a task (16/07/2013 - v0.2)
+- Set due date for a task (16/07/2013 - v0.2)
+- Add notes to a task (16/07/2013 - v0.2)
+- Delete a task (16/07/2013 - v0.2)
+- Delete list (16/07/2013 - v0.2)
+- Get reminders (17/07/2013 - v0.9)
+- Set reminder for a task (17/07/2013 - v0.9)
 
 Subtasks are automatically added to their parent instead as a single task
 By setting a parameter to the functions for tasks you can specify if completed tasks should be hidden or not.
