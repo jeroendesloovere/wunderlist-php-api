@@ -261,15 +261,28 @@
 			
 			$output = curl_exec($ch);
 			
+			// Get HTTP response
 			$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-			if($httpCode != 200 && $httpCode != 201)
+			
+			// Close CURL
+			curl_close($ch);
+			
+			// get / put / delete requests should have HTTP Code 200 OK
+			if($httpCode == 200 && strtolower($method) != 'post')
+			{
+				return json_decode($output, true);
+			}
+			// post requests should have HTTP Code 201 Created
+			elseif($httpCode == 201 && strtolower($method) == 'post')
+			{
+				return json_decode($output, true);
+			}
+			// If the HTTP code did not match, than the request failed
+			else
 			{
 				return false;	
 			}
-			
-			curl_close($ch);
-			
-			return json_decode($output, true);			
+						
 		}
 		
 	}
