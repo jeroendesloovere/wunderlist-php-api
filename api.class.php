@@ -224,6 +224,29 @@
 		}
 		
 		/**
+		 * Add a note to a task
+		 *
+		 * @param string $task_id
+		 * @param string $note
+		 */
+		public function addNoteToTask($task_id, $note)
+		{
+			if( $task_id == "" || $title == "" )
+			{
+				return false;
+			}
+			else
+			{
+				// Set data for the call
+				$data = array(
+					'note' => $note
+				);
+				
+				return $this->call('/'.$task_id, 'put', $data);
+			}
+		}
+		
+		/**
 		 * performs the call to the Wunderlist API
 		 *
 		 * @param string $action
@@ -238,10 +261,22 @@
 			$ch = curl_init($this->api_url.$action);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true );
 			
-			// What method?
+			// Set request type for POST
 			if(strtolower($method) == 'post')
 			{
 				curl_setopt($ch, CURLOPT_POST, true );
+			}
+			
+			// Set request type for PUT
+			if(strtolower($method) == 'put')
+			{
+				curl_setopt($ch, CURLOPT_PUT, true );	
+			}
+			
+			// Set request type for DELETE
+			if(strtolower($method) == 'delete')
+			{
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');	
 			}
 			
 			// Pass data?
