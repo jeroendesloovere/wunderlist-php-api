@@ -13,28 +13,29 @@ ical.php: this file generates a valid ical file which uses the due dates of task
 - For Google calendar users: https://support.google.com/calendar/answer/37118?hl=en
 - For other apps/software: check the ability to (auto) import ical files to your app/software
 
-Currently supported methods:
-- Login to Wunderlist API
-- Get all tasks
-- Get all lists
-- Get all tasks within a list
-- Add a list
-- Add a task
+Currently supported methods (Examples are included in the /examples/ folder)
+
+- Login to Wunderlist API (16/07/2013)
+- Get all tasks (16/07/2013)
+- Get all lists (16/07/2013)
+- Get all tasks within a list (16/07/2013)
+- Add a list (17/07/2013)
+- Add a task (17/07/2013)
+- Set due date for a task (17/07/2013)
+- Add notes to a task (17/07/2013)
+- Delete a task (17/07/2013)
+- Delete list (17/07/2013)
+- Get reminders (17/07/2013)
+- Set reminder for a task (17/07/2013)
 
 Subtasks are automatically added to their parent instead as a single task
 By setting a parameter to the functions for tasks you can specify if completed tasks should be hidden or not.
 
-Future - but soon enough - functions:
-- Set due date for a task
-- Add notes to a task
-- Delete a task
-- Delete list
-- Get reminders
-- Set reminder for a task
-
-After the basic functionality I will add some more advanced filtering such as:
-- Get tasks for today
-- Get tasks for this week
-- Get all tasks that are overdue
-- Filter tasklist by due date
-- Filter tasklist by starred tasks
+Future planned updates:
+- 1st priority: add usable errors to the class instead of (bool)false
+- 2nd priority: Get tasks for today
+- 2nd priority: Get tasks for this week
+- 2nd priority: Get all tasks that are overdue
+- 3th priority: Filter tasklist by due date
+- 3th priority: Filter tasklist by starred tasks
+- 4th priority: Add iCal export as a function to the class instead as a single file
