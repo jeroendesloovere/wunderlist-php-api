@@ -42,7 +42,7 @@
 			} 
 			else
 			{
-				false;	
+				return false;	
 			}
 		}
 		
