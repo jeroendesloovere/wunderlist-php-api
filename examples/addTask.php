@@ -10,9 +10,18 @@
 	$due_date = false;
 	$starred = false;
 	
-	// Add the new task
-	$addTask = $wunderlist->addTask($title, $list_id, $due_date, $starred);
-	
-	// The task details are returned if the request was succesfull
-	echo '<pre>';
-	var_dump($addTask);
+	// Try & Catch
+	try
+	{
+		// Add the new task
+		$addTask = $wunderlist->addTask($title, $list_id, $due_date, $starred);
+		
+		// The task details are returned if the request was succesfull
+		echo '<pre>';
+		var_dump($addTask);
+	}
+	catch(Exception $e)
+	{
+		echo $e->getMessage();
+		// $e->getCode() contains the error code	
+	}

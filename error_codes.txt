@@ -1,0 +1,19 @@
+; API Call error
+0000	API call error (this message includes the method, action, expected http response and received http response)
+
+; Authentication errors
+0001	Authentication failed
+
+; Errors for missing or invalid input data
+1001	E-mail parameter empty
+1002	Password parameter empty
+1003	list_id parameter empty
+1004	title parameter empty
+1005	task_id parameter empty
+1006	due_date parameter invalid
+1007 	note parameter empty
+1008	recurring profile invalid
+1009 	reminder_date parameter invalid
+
+; Errors for custom functions
+2001	List not found

@@ -29,6 +29,18 @@
 		 */
 		public function __construct($email, $password)
 		{
+			// Check for email
+			if( $email == "" )
+			{
+				throw new Exception("E-mail parameter empty", 1001);	
+			}
+			
+			// Check for password
+			if( $password == "" )
+			{
+				throw new Exception("Password parameter empty", 1002);	
+			}
+			
 			$data = array(
 				'email' => $email,
 				'password' => $password
@@ -38,11 +50,10 @@
 			if($return != false)
 			{
 				$this->authtoken = $return['token'];
-				return true;
 			} 
 			else
 			{
-				return false;	
+				throw new Exception("Authentication failed", 0001);	
 			}
 		}
 		
@@ -127,6 +138,12 @@
 		 */
 		public function getTasksByList($list_id, $completed = false)
 		{
+			// Check data
+			if( $list_id == "" )
+			{
+				throw new Exception( "list_id parameter empty", 1003 );	
+			}
+			
 			// Get all lists
 			if($this->lists == false)
 			{
@@ -167,7 +184,7 @@
 			{
 				return $this->listTasks[ $list_id ];	
 			} else {
-				return false;	
+				throw new Exception( "List not found", 2001 );	
 			}
 			
 		}
@@ -181,10 +198,12 @@
 		 */
 		public function addList($title)
 		{
+			// Check title parameter
 			if( $title == "" )
 			{
-				return false;
+				throw new Exception( "title parameter empty", 1004 );
 			}
+			
 			else
 			{
 				return $this->call('/me/lists', 'post', array('title' => $title));	
@@ -203,27 +222,36 @@
 		 */
 		public function addTask($title, $list_id, $due_date='', $starred=false)
 		{
-			if( $title == "" || $list_id == "" )
+			// Check title parameter
+			if( $title == "" )
 			{
-				return false;
+				throw new Exception( "title parameter empty", 1004 );
 			}
-			else
+			
+			// Check list_id parameter
+			if( $list_id == "" )
 			{
-				// Set data for the call
-				$data = array(
-					'title' => $title,
-					'list_id' => $list_id,
-					'starred' => $starred == true ? 1 : 0
-				);
-				
-				// Add due date of found
-				if( $due_date != "" )
+				throw new Exception( "list_id parameter empty", 1003 );
+			}
+			
+			// Set data for the call
+			$data = array(
+				'title' => $title,
+				'list_id' => $list_id,
+				'starred' => $starred == true ? 1 : 0
+			);
+			
+			// Add due date of found
+			if( $due_date != "" )
+			{
+				if( !strtotime($due_date) )
 				{
-					$data['due_date'] = date("Y-m-d", strtotime($due_date));
-				}	
-				
-				return $this->call('/me/tasks', 'post', $data);
-			}
+					throw new Exception("due_date parameter invalid", 1006);	
+				}
+				$data['due_date'] = date("Y-m-d", strtotime($due_date));
+			}	
+			
+			return $this->call('/me/tasks', 'post', $data);
 		}
 		
 		/**
@@ -236,19 +264,24 @@
 		 */
 		public function addNoteToTask($task_id, $note)
 		{
-			if( $task_id == "" || $note == "" )
+			// Check title parameter
+			if( $task_id == "" )
 			{
-				return false;
+				throw new Exception( "task_id parameter empty", 1005 );
 			}
-			else
+			
+			// Check list_id parameter
+			if( $note == "" )
 			{
-				// Set data for the call
-				$data = array(
-					'note' => $note
-				);
-				
-				return $this->call('/'.$task_id, 'put', $data);
+				throw new Exception( "note parameter empty", 1007 );
 			}
+			
+			// Set data for the call
+			$data = array(
+				'note' => $note
+			);
+			
+			return $this->call('/'.$task_id, 'put', $data);
 		}
 		
 		/**
@@ -273,32 +306,38 @@
 				default:$interval_type=false;break;
 			}
 			
-			if( $task_id == "" || $due_date == "" )
+			// Check title parameter
+			if( $task_id == "" )
 			{
-				return false;
+				throw new Exception( "task_id parameter empty", 1005 );
 			}
-			else
-			{	
-				$data = array(
-					'due_date' => date("Y-m-d", strtotime($due_date))
-				);
-				
-				// If the task is recurring, set the interval
-				if( $recurring )
+			
+			// Check for a valid due_date
+			if( $due_date == "" || !strtotime($due_date) )
+			{
+				throw new Exception("due_date parameter invalid", 1006);	
+			}
+			
+			// Set the data
+			$data = array(
+				'due_date' => date("Y-m-d", strtotime($due_date))
+			);
+			
+			// If the task is recurring, set the interval
+			if( $recurring )
+			{
+				if( !$interval_type || intval($interval_num) == 0 )
 				{
-					if( !$interval_type || intval($interval_num) == 0 )
-					{
-						return false;
-					}
-					else
-					{
-						$data['recurrence_count'] = intval($interval_num);
-						$data['recurrence_type'] = $interval_type;	
-					}
+					throw new Exception("Invalid recurring profile", 1008);
 				}
-				
-				return $this->call('/'.$task_id, 'put', $data);
+				else
+				{
+					$data['recurrence_count'] = intval($interval_num);
+					$data['recurrence_type'] = $interval_type;	
+				}
 			}
+			
+			return $this->call('/'.$task_id, 'put', $data);
 			
 		}
 		
@@ -311,14 +350,13 @@
 		 */
 		public function deleteTask($task_id)
 		{
+			// Check title parameter
 			if( $task_id == "" )
 			{
-				return false;
+				throw new Exception( "task_id parameter empty", 1005 );
 			} 
-			else
-			{
-				return $this->call('/'.$task_id, 'delete', array());
-			}
+			
+			return $this->call('/'.$task_id, 'delete', array());
 		}
 		
 		/**
@@ -330,14 +368,13 @@
 		 */
 		public function deleteList($list_id)
 		{
+			// Check data
 			if( $list_id == "" )
 			{
-				return false;
-			} 
-			else
-			{
-				return $this->call('/'.$list_id, 'delete', array());
+				throw new Exception( "list_id parameter empty", 1003 );	
 			}
+			
+			return $this->call('/'.$list_id, 'delete', array());
 		}
 		
 		/**
@@ -376,20 +413,25 @@
 		 */
 		public function addReminderToTask($task_id, $reminder_date)
 		{
-			if( $task_id == "" || $reminder_date == "" )
+			// Check title parameter
+			if( $task_id == "" )
 			{
-				return false;
-			}
-			else
+				throw new Exception( "task_id parameter empty", 1005 );
+			} 
+			
+			// Check reminder_date
+			if( $reminder_date == "" || !strtotime($reminder_date))
 			{
-				// Set data for the call
-				$data = array(
-					'task_id' => $task_id,
-					'date' => date("Y-m-d\TH:i:s\Z", strtotime($reminder_date))
-				);
-				
-				return $this->call('/me/reminders', 'post', $data);
+				throw new Exception( "reminder_date parameter invalid", 1009 );
 			}
+			
+			// Set data for the call
+			$data = array(
+				'task_id' => $task_id,
+				'date' => date("Y-m-d\TH:i:s\Z", strtotime($reminder_date))
+			);
+			
+			return $this->call('/me/reminders', 'post', $data);
 		}
 		
 		/**
@@ -403,6 +445,9 @@
 		 */
 		private function call($action, $method, $data)
 		{	
+			// Expected response is 200 OK
+			$expectedResponse = 200;
+				
 			// Start with an empty set of headers
 			$headers = array();
 			
@@ -418,6 +463,11 @@
 			// Set request type for POST
 			if( strtolower($method) == 'post' )
 			{
+				if( $action != "/login" )
+				{
+					// For post-request the expected response is 201 Created
+					$expectedResponse = 201;
+				}
 				curl_setopt($ch, CURLOPT_POST, true );
 			}
 			
@@ -477,14 +527,7 @@
 			// If the HTTP code did not match, than the request failed
 			else
 			{
-				// This can be used to handle errors within the wrapper
-				return array(
-					'action' => $action,
-					'method' => $method,
-					'data' => serialize($data),
-					'httpCode' => $httpCode,
-					'output' => $output
-				);
+				throw new Exception( "API Call failed - Method: $method - Action: $action - HTTP Response: $httpCode (Expected $expectedResponse)", 0000 );
 			}
 						
 		}

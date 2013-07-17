@@ -8,4 +8,12 @@
 	require_once('../api.class.php');
 	
 	// construct the Wunderlist class using user Wunderlist e-mailaddress and password	
-	$wunderlist = new Wunderlist($wlUser, $wlPass);
+	try
+	{
+		$wunderlist = new Wunderlist($wlUser, $wlPass);
+	}
+	catch(Exception $e)
+	{
+		die( $e->getMessage() );
+		// $e->getCode() contains the error code	
+	}
