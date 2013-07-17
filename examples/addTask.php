@@ -3,7 +3,7 @@
 	// Include the class & constructor
 	include_once('init.php');
 	
-	// Demo data (NOTE: due_date = ISO format Y-m-dTH:i:sZ
+	// Demo data
 	$title = "New Task #2";
 	$list_id = "ABPtAATIHNM";
 	//$due_date = date("Y-m-d", mktime()+(60*60*24));
