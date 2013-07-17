@@ -33,7 +33,7 @@ Subtasks are automatically added to their parent instead as a single task
 By setting a parameter to the functions for tasks you can specify if completed tasks should be hidden or not.
 
 Future planned updates:
-- 1st priority: add usable errors to the class instead of (bool)false
+- 1st priority: add usable errors to the class instead of (bool)false - Added Exceptions (17/07/2013 - v1.01)
 - 2nd priority: Get tasks for today
 - 2nd priority: Get tasks for this week
 - 2nd priority: Get all tasks that are overdue
