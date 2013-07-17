@@ -1,8 +1,10 @@
 ; API Call error
 0000	API call error (this message includes the method, action, expected http response and received http response)
+0001	No API action given
+0002 	No API method given
 
 ; Authentication errors
-0001	Authentication failed
+3001	Authentication failed
 
 ; Errors for missing or invalid input data
 1001	E-mail parameter empty
