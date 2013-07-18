@@ -2,7 +2,7 @@ Wunderlist2-PHP-Wrapper
 =======================
 
 A PHP Wrapper for Wunderlist2 API
-- Current version: 1.00
+- Current version: 1.01
 
 Thanks go out to these two Github projects, they gave me insight in the way the Wunderlist API works.
 - https://github.com/bsmt/wunderpy
