@@ -6,7 +6,7 @@
 	 * Purpose: communicate with Wunderlist2 API
 	 *
 	 * @author		Joshua de Gier
-	 * @version		1.00	17/07/2013
+	 * @version		1.01	18/07/2013
 	 */
 
 	class Wunderlist
