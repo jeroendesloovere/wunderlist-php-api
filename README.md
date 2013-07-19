@@ -14,6 +14,8 @@ ical.php: this file generates a valid ical file which uses the due dates of task
 - For Google calendar users: https://support.google.com/calendar/answer/37118?hl=en
 - For other apps/software: check the ability to (auto) import ical files to your app/software
 
+Not familiar with PHP, but looking for a way to get your tasks in your calender? Take a look at http://wcal.me/ - we've created this free webservice for anyone that wants his/her tasks in their calender/agenda app!
+
 Currently supported methods (Examples are included in the /examples/ folder)
 
 - Login to Wunderlist API (15/07/2013 - v0.1)
