@@ -38,11 +38,10 @@ Subtasks are automatically added to their parent instead as a single task
 By setting a parameter to the functions for tasks you can specify if completed tasks should be hidden or not.
 
 Future planned updates:
-- 1st priority: add usable errors to the class instead of (bool)false - Added Exceptions (17/07/2013 - v1.01)
-- 2nd priority: Get tasks for today
-- 2nd priority: Get tasks for this week
-- 2nd priority: Get all tasks that are overdue
-- 3th priority: Filter tasklist by due date
-- 3th priority: Filter tasklist by starred tasks
-- 4th priority: Add iCal export as a function to the class instead as a single file
-- 5th priority: See if Wunderlist Files can be added to the PHP Wrapper
+- 1st priority: Get tasks for today
+- 1st priority: Get tasks for this week
+- 1st priority: Get all tasks that are overdue
+- 2nd priority: Filter tasklist by due date
+- 2nd priority: Filter tasklist by starred tasks
+- 3th priority: Add iCal export as a function to the class instead as a single file
+- 4rd priority: See if Wunderlist Files can be added to the PHP Wrapper
