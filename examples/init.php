@@ -6,6 +6,7 @@
 
 	// Require the API class
 	require_once('../api.class.php');
+	require_once('../api.files.class.php');
 	
 	// construct the Wunderlist class using user Wunderlist e-mailaddress and password	
 	try
