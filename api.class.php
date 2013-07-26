@@ -7,7 +7,7 @@
 	 *
 	 * @requires	base.class.php
 	 * @author		Joshua de Gier
-	 * @version		1.01	18/07/2013
+	 * @version		1.02	26/07/2013
 	 */
 
 	require_once('base.class.php');
@@ -18,9 +18,9 @@
 		public $authtoken = false;
 		protected $api_url = 'https://api.wunderlist.com';
 		
-		protected $tasks = false;
-		protected $lists = false;
-		protected $listTasks = false;
+		private $tasks = false;
+		private $lists = false;
+		private $listTasks = false;
 		
 		/**
 		 * construct the Wunderlist API and save the authentication token for later use
