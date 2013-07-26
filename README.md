@@ -2,7 +2,10 @@ Wunderlist2-PHP-Wrapper
 =======================
 
 A PHP Wrapper for Wunderlist2 API
-- Current version: 1.01
+- Current version: 1.02
+
+Latest news about the class:
+26/07/2013: I've been playing around a little with the new function "Files". I've created a new class called Wunderfiles (api.files.class.php) and put the call() method in an own class (Wunderbase: base.class.php). Both classes (Wunderlist & Wunderfiles) extend from this base class. Furthermore the call() method and $api_url variables have been made protected to work across the other classes. The $authtoken variable from class Wunderlist is now public, this way you can send it along to the Wunderfiles class with requires the token to be set on construction of the class (See /examples/getFiles.php). As for now: IT IS NOT WORKING YET(!). It's a quick draft of how it would look in the future as soon as I figure out a way to get the files working (and I'm not sure yet if there's an ability to get this working at all!). Next updates are coming pretty soon (tasks for today, next week & overdue)! 
 
 Thanks go out to these two Github projects, they gave me insight in the way the Wunderlist API works.
 - https://github.com/bsmt/wunderpy
@@ -42,3 +45,4 @@ Future planned updates:
 - 3th priority: Filter tasklist by due date
 - 3th priority: Filter tasklist by starred tasks
 - 4th priority: Add iCal export as a function to the class instead as a single file
+- 5th priority: See if Wunderlist Files can be added to the PHP Wrapper
