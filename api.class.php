@@ -127,6 +127,9 @@
 			{
 				$aOrdened[ $list['id'] ] = $list;
 			}
+
+			$aOrdened[ 'inbox' ] = 'Inbox'; // Inbox is not returned from API call.
+			
 			$this->lists = $aOrdened;
 			
 			return $aOrdened;	
