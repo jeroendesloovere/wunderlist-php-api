@@ -161,7 +161,7 @@
 			// Get all tasks
 			if($this->tasks == false)
 			{
-				$this->getTasks();	
+				$this->getTasks($completed);	
 			}
 			
 			// Build an associative array with all tasks
