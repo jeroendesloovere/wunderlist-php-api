@@ -1,3 +1,7 @@
+-----
+13 Nov 2013: We are currently experiencing problems with the Wunderlist2 API. The issue can be found here (http://stackoverflow.com/questions/19950375/curl-returns-half-json-string-in-most-cases) all help is welcome.
+-----
+
 Wunderlist2-PHP-Wrapper
 =======================
 
