@@ -21,7 +21,7 @@
 			}
 			
 			// Check method parameter
-			if( $action == "" )
+			if( $method == "" )
 			{
 				throw new Exception( "No API method given", 0002 );
 			}
