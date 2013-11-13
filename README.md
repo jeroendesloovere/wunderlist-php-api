@@ -1,6 +1,6 @@
------
-13 Nov 2013: We are currently experiencing problems with the Wunderlist2 API. The issue can be found here (http://stackoverflow.com/questions/19950375/curl-returns-half-json-string-in-most-cases) all help is welcome.
------
+
+13 Nov 2013: Currently there's a bug within the Wunderlist API that prevents the data from '/me/tasks' to be decoded and used within the wrapper. The issue lies with Wunderlist and they are looking for a fix.
+
 
 Wunderlist2-PHP-Wrapper
 =======================
