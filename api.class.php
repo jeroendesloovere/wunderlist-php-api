@@ -170,10 +170,13 @@
 				// Loop lists
 				foreach($this->lists as $list)
 				{
-					$this->listTasks[ $list['id'] ] = array(
-						'details' => $list,
-						'tasks' => array()
-					);
+					if(isset( $list['id'] )) 
+					{
+						$this->listTasks[ $list['id'] ] = array(
+							'details' => $list,
+							'tasks' => array()
+						);
+					}
 				}
 				
 				// Loop tasks
