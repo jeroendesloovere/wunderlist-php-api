@@ -1,3 +1,6 @@
+18 March 2014: Added the option to add a task as a subtask
+
+=======================
 13 Nov 2013: Currently there's a bug within the Wunderlist API that prevents the data from '/me/tasks' to be decoded and used within the wrapper. The issue lies with Wunderlist and they are looking for a fix.
 14 Nov 2013: Everything seems to be fine again, the response from '/me/tasks' is complete again.
 
