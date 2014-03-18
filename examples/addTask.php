@@ -7,6 +7,8 @@
 	$title = "New Task #2";
 	$list_id = "ABPtAATIHNM";
 	//$due_date = date("Y-m-d", mktime()+(60*60*24));
+	//$parent_id = "aZ_sadKsdj";
+	$parent_id = '';
 	$due_date = false;
 	$starred = false;
 	
@@ -14,7 +16,7 @@
 	try
 	{
 		// Add the new task
-		$addTask = $wunderlist->addTask($title, $list_id, $due_date, $starred);
+		$addTask = $wunderlist->addTask($title, $list_id, $parent_id, $due_date, $starred);
 		
 		// The task details are returned if the request was succesfull
 		echo '<pre>';

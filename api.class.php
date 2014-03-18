@@ -247,50 +247,60 @@
 			}
 		}
 		
+
 		/**
-		 * Add a task to a list
-		 *
-		 * @param string $title
-		 * @param string $list_id
-		 * @param date $due_date (format "YYYY-mm-dd")
-		 * @param bool $starred
-		 *
-		 * @throws Exception if any of the parameters are empty
-		 * @return array Returns the array with the added task
-		 */
-		public function addTask($title, $list_id, $due_date='', $starred=false)
+		* Add a task to a list
+		*
+		* @param string $title
+		* @param string $list_id
+		* @param string $parent_id
+		* @param date $due_date (format "YYYY-mm-dd")
+		* @param bool $starred
+		*
+		* @throws Exception if any of the parameters are empty
+		* @return array Returns the array with the added task
+		*/
+		public function addTask($title, $list_id, $parent_id = '', $due_date='', $starred=false)
 		{
-			// Check title parameter
-			if( $title == "" )
-			{
-				throw new Exception( "title parameter empty", 1004 );
-			}
-			
-			// Check list_id parameter
-			if( $list_id == "" )
-			{
-				throw new Exception( "list_id parameter empty", 1003 );
-			}
-			
-			// Set data for the call
-			$data = array(
-				'title' => $title,
-				'list_id' => $list_id,
-				'starred' => $starred == true ? 1 : 0
-			);
-			
-			// Add due date of found
-			if( $due_date != "" )
-			{
-				if( !strtotime($due_date) )
+				// Check title parameter
+				if( $title == "" )
 				{
-					throw new Exception( "due_date parameter invalid", 1006 );	
+						throw new Exception( "title parameter empty", 1004 );
 				}
-				$data['due_date'] = date("Y-m-d", strtotime($due_date));
-			}	
-			
-			return $this->call('/me/tasks', 'post', $data);
+		 
+				// Check list_id parameter
+				if( $list_id == "" )
+				{
+						throw new Exception( "list_id parameter empty", 1003 );
+				}
+		 
+				// Set data for the call
+				$data = array(
+						'title' => $title,
+						'list_id' => $list_id,
+						'starred' => $starred == true ? 1 : 0
+				);
+		 
+				// Check for a parent id
+				if( $parent_id != "" )
+				{
+						$data['parent_id'] = $parent_id;
+				}
+		 
+				// Add due date of found
+				if( $due_date != "" )
+				{
+						if( !strtotime($due_date) )
+						{
+								throw new Exception( "due_date parameter invalid", 1006 );     
+						}
+						$data['due_date'] = date("Y-m-d", strtotime($due_date));
+				}      
+		 
+				return $this->call('/me/tasks', 'post', $data);
 		}
+	
+
 		
 		/**
 		 * Add a note to a task
