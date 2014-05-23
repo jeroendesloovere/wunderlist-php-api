@@ -19,20 +19,63 @@ use JeroenDesloovere\Wunderlist\Wunderlist;
 // define API
 $api = new Wunderlist($username, $password);
 
+/*
+ * Profile
+ */
+
 // get profile
-//$items = $api->getProfile();
+$items = $api->getProfile();
+
+// get settings
+//$items = $api->getSettings();
+
+/*
+ * Lists
+ */
 
 // get all lists
 //$items = $api->getLists();
-echo "na getLists";
+
+// get a list
+//$items = $api->getList('ENTER_YOUR_LIST_ID_HERE');
+
+// get shares for a list
+//$items = $api->getListShares('ENTER_YOUR_LIST_ID_HERE');
+
+/*
+ * Tasks
+ */
 
 // get all tasks
 //$items = $api->getTasks();
-echo "na getTasks";
 
 // get all tasks from inbox
-$items = $api->getTasksFromInbox();
-echo "na getTasksFromInbox";
+//$items = $api->getTasksFromInbox();
+
+// get a task
+//$items = $api->getTask('ENTER_YOUR_TASK_ID_HERE');
+
+// get all task messages
+//$items = $api->getTaskMessages('ENTER_YOUR_TASK_ID_HERE');
+
+/*
+ * Other
+ */
+
+// get all events
+//$items = $api->getEvents();
+
+// get all friends
+//$items = $api->getFriends();
+
+// get all reminders
+//$items = $api->getReminders();
+
+// get all shares
+//$items = $api->getShares();
+
+// get all services
+//$items = $api->getServices();
 
 // dump items
 print_r($items);
