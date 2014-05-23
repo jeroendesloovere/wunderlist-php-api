@@ -1,0 +1,22 @@
+{
+    "name": "jeroendesloovere/wunderlist-php-api",
+    "type": "library",
+    "description": "This Wunderlist PHP class connects to Wunderlist API",
+    "keywords": ["wunderlist", "to-do", "reminders", "tasks", "api", "php"],
+    "homepage": "https://github.com/jeroendesloovere/wunderlist-php-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeroen Desloovere",
+            "email": "info@jeroendesloovere.be",
+            "homepage": "http://jeroendesloovere.be",
+			"role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3"
+    },
+    "autoload": {
+        "psr-4": { "JeroenDesloovere\\Wunderlist\\": "src/" }
+    }
+}

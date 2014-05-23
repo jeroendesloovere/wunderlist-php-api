@@ -1,6 +1,6 @@
 # Wunderlist PHP Class
 
-> This Wunderlist PHP Class connects to the Wunderlist API v2.
+> This Wunderlist PHP Class connects to the Wunderlist API.
 
 ## Documentation
 
