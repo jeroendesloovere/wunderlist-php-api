@@ -16,6 +16,8 @@ $lists = $api->getLists();
 
 // get tasks
 $tasks = $api->getTasks();
+
+// ...
 ```
 [see all examples](/examples/example.php) or check [the class](/src/Wunderlist.php)
 
