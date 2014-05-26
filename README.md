@@ -5,6 +5,8 @@
 ## Example
 
 ```
+use JeroenDesloovere\Wunderlist\Wunderlist;
+
 // define API
 $api = new Wunderlist('username', 'password');
 
@@ -23,7 +25,7 @@ Check [the class source](/src/Wunderlist.php) or [view all examples](/examples/e
 
 ## Composer can be used
 
-> When using [Composer](https://getcomposer.org) you can always load in the latest version. [Check this class on Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
+> When using [Composer](https://getcomposer.org) you can always load in the latest version. [Check Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
 
 ```
 "jeroendesloovere/wunderlist-php-api": "dev-master"
