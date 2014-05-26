@@ -77,5 +77,28 @@ $items = $api->getProfile();
 // get all services
 //$items = $api->getServices();
 
+/*
+ * Inserts
+ */
+ 
+$listId = '';
+//$taskId = '';
+
+// insert a list
+//$items = $api->insertList('NEW');
+
+// insert a task
+//$items = $api->insertTask('NEW TASK', $listId);
+
+/*
+ * Deletes
+ */
+
+// delete list
+//$items = $api->deleteList($listId);
+
+// delete task
+//$items = $api->deleteTask($taskId);
+
 // dump items
 print_r($items);
