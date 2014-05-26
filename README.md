@@ -1,8 +1,8 @@
 # Wunderlist PHP Class
 
-## What is Wunderlist
+## What is Wunderlist?
 
-> Wunderlist is a to-do-task app with lots of possibilities. Lists can be created with tasks, sub-tasks, reminders, files and notes. Tasks and lists can be re-arranged, starred and shared to other users.
+> Wunderlist is a to-do-task app with lots of possibilities. Lists can be created with tasks, sub-tasks, reminders, files and notes. Lists, tasks and sub-tasks can be re-arranged. Lists can be shared with other users and tasks can be starred.
  
 ## What does this library do?
 
@@ -16,7 +16,7 @@ This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PEND
 
 ### Using Composer
 
-When using [Composer](https://getcomposer.org) you can always load in the latest version. [Check Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
+When using [Composer](https://getcomposer.org) you can always load in the latest version.
 
 ```
 {
@@ -25,6 +25,7 @@ When using [Composer](https://getcomposer.org) you can always load in the latest
     }
 }
 ```
+Check [in Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
 
 ### Usage example
 ```
