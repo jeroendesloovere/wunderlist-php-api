@@ -21,9 +21,17 @@ $tasks = $api->getTasks();
 ```
 Check [the class source](/src/Wunderlist.php) or [view all examples](/examples/example.php).
 
+## Composer can be used
+
+> When using [Composer](https://getcomposer.org) you can always load in the latest version. [Check this class on Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
+
+```
+"jeroendesloovere/wunderlist-php-api": "dev-master"
+```
+
 ## Based on
 
-This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but has been **rewritten from the ground up** to match the PSR-2-code-styling.
+This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but has been **rewritten from the ground up** to match the latest PHP PSR-code-stylings. Works perfectly using Composer.
 
 ## Documentation
 
