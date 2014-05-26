@@ -19,7 +19,7 @@ $tasks = $api->getTasks();
 
 // ...
 ```
-[see all examples](/examples/example.php) or check [the class](/src/Wunderlist.php)
+Check [the class source](/src/Wunderlist.php) or [view all examples](/examples/example.php).
 
 ## Based on
 
