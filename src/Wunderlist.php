@@ -88,10 +88,41 @@ class Wunderlist
     }
 
     /**
+     * Delete list
+     *
+     * @param string $listId
+     * @return bool
+     */
+    public function deleteList($listId)
+    {
+        // delete list
+        $result = $this->doCall($listId, null, 'DELETE');
+
+        // if delete was successfull an empty result is return
+		return (is_array($result) && count($result) == 0);
+    }
+
+    /**
+     * Delete task
+     *
+     * @param string $taskId
+     * @return bool
+     */
+    public function deleteTask($taskId)
+    {
+        // delete list
+        $result = $this->doCall($taskId, null, 'DELETE');
+
+        // if delete was successfull an empty result is return
+		return (is_array($result) && count($result) == 0);
+    }
+
+    /**
      * Call a certain method with its parameters
      *
      * @param  string $endPoint
-     * @param  string $parameters
+     * @param  string $parameters[optional]
+     * @param  string $method[optional]
      * @return false  or array
      */
     protected function doCall($endPoint, $parameters = array(), $method = 'GET')
@@ -132,17 +163,27 @@ class Wunderlist
             curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameters) );
         }
 
-        // method is POST, used for login
+        // method is POST, used for login or inserts
         if ($method == 'POST') {
             // define post method
             curl_setopt($curl, CURLOPT_POST, true);
-        }
+        // method is DELETE
+		} elseif ($method == 'DELETE') {
+			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');	
+		}
 
         // execute
         $response = curl_exec($curl);
 
+        // debug is on
+        if (self::DEBUG) {
+            echo $url . '<br/>';
+            print_r($response);
+            echo '<br/><br/>';
+        }
+
         // get HTTP response code
-        $httpCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $httpCode = (int) curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         // close
         curl_close($curl);
@@ -156,7 +197,7 @@ class Wunderlist
         $result = false;
 
         // successfull response
-        if (($httpCode == 200) || ($httpCode == 201)) {
+        if (($httpCode == 200) || ($httpCode == 201)) {
             $result = json_decode($response, true);
         }
 
@@ -177,11 +218,6 @@ class Wunderlist
 
             // Set header Content-Lenght to the json encoded length
             $headers[] = 'Content-Length: '.strlen(json_encode($data));
-        }
-
-        // Set request type for DELETE
-        if ( strtolower($endPoint) == 'delete' ) {
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
         }
 
         // Files
@@ -352,6 +388,66 @@ class Wunderlist
     public function getTasksFromInbox()
     {
         return $this->doCall('inbox/tasks');
+    }
+
+    /**
+     * Insert list
+     *
+     * @param string $title
+     * @return array
+     */
+    public function insertList($title)
+    {
+        // init parameters
+        $parameters = array();
+
+        // build parameters
+        $parameters['title'] = (string) $title;
+
+        // insert list
+        return $this->doCall('me/lists', $parameters, 'POST');
+    }
+
+    /**
+     * Insert task
+     *
+     * @param string $title
+     * @param string $listId
+     * @param string $parentId[optional]
+     * @param string $dueDate[optional]
+     * @param bool $starred[optional]
+     * @return array
+     */
+    public function insertTask($title, $listId, $parentId = null, $dueDate = null, $starred = false)
+    {
+        // init parameters
+        $parameters = array();
+
+        // build parameters
+        $parameters['title'] = (string) $title;
+        $parameters['list_id'] = (string) $listId;
+        $parameters['starred'] = ((bool) $starred) ? 1 : 0;
+
+        // we have a parent id
+        if ($parentId !== null) {
+            // add to parameters
+            $parameters['parent_id'] = $parentId;
+        }
+
+        // we have a due date
+        if ($dueDate !== null) {
+            // is no time
+            if (!strtotime($dueDate)) {
+                // throw error
+                throw new WunderlistException('Parameters dueDate is invalid.');
+            }
+
+            // add parameter
+            $parameters['due_date'] = date('Y-m-d', strtotime($dueDate));
+        }
+
+        // return insert task
+        return $this->doCall('me/tasks', $parameters, 'POST');
     }
 }
 
