@@ -1,14 +1,38 @@
 # Wunderlist PHP Class
 
-> This Wunderlist PHP Class connects to the Wunderlist API.
+## What is Wunderlist
 
-## Example
+> Wunderlist is a to-do-task app with lots of possibilities. Lists can be created with tasks, sub-tasks, reminders, files and notes. Tasks and lists can be re-arranged, starred and shared to other users.
+ 
+## What does this library do?
+
+This Wunderlist PHP Class connects to the Wunderlist API and has all functions implemented to insert/update/delete lists, tasks, reminders, files, notes, ...
+
+## Based on
+
+This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but has been **rewritten from the ground up** to match the latest PHP PSR-code-stylings. Works perfectly using Composer.
+
+## Installing
+
+### Using Composer
+
+When using [Composer](https://getcomposer.org) you can always load in the latest version. [Check Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
 
 ```
-use JeroenDesloovere\Wunderlist\Wunderlist;
+{
+    "require": {
+        "jeroendesloovere/wunderlist-php-api": "dev-master"
+    }
+}
+```
+
+### Usage example
+```
+// required to load (only when not using an autoloader)
+require_once __DIR__ . '/src/Wunderlist.php';
 
 // define API
-$api = new Wunderlist('username', 'password');
+$api = new \JeroenDesloovere\Wunderlist\Wunderlist('username', 'password');
 
 // get profile
 $profile = $api->getProfile();
@@ -22,18 +46,6 @@ $tasks = $api->getTasks();
 // ...
 ```
 Check [the class source](/src/Wunderlist.php) or [view all examples](/examples/example.php).
-
-## Composer can be used
-
-> When using [Composer](https://getcomposer.org) you can always load in the latest version. [Check Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
-
-```
-"jeroendesloovere/wunderlist-php-api": "dev-master"
-```
-
-## Based on
-
-This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but has been **rewritten from the ground up** to match the latest PHP PSR-code-stylings. Works perfectly using Composer.
 
 ## Documentation
 
