@@ -203,37 +203,6 @@ class Wunderlist
 
         // return
         return $result;
-
-        /*
-        // Set request type for PUT
-        if ( strtolower($endPoint) == 'put' ) {
-            // Set custom request to put
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
-
-            // Data needs to be send as json
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data) );
-
-            // Set header content-type to application/json
-            $headers[] = 'content-type: application/json';
-
-            // Set header Content-Lenght to the json encoded length
-            $headers[] = 'Content-Length: '.strlen(json_encode($data));
-        }
-
-        // Files
-        if ( strpos($action, "/files") ) {
-            $headers[] = "Accept: application/json";
-            $headers[] = "Accept-Encoding: gzip, deflate";
-            $headers[] = "Accept-Language: nl,en-us;q=0.7,en,q=0.3";
-            $headers[] = "Content-Type: application/json; charset=utf-8";
-            $headers[] = "Host: files.wunderlist.com";
-            $headers[] = "Origin: https://www.wunderlist.com";
-            $headers[] = "Referer: https://www.wunderlist.com";
-            $headers[] = "X-6W-Platform: web";
-            $headers[] = "X-6W-Product: wunderlist";
-            $headers[] = "X-6W-System: MacIntel";
-        }
-        */
     }
 
     /**
