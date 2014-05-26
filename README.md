@@ -5,19 +5,23 @@
 ## Example
 
 ```
-// required to load
-require_once 'src/Wunderlist.php';
-
-use JeroenDesloovere\Wunderlist\Wunderlist;
-
 // define API
 $api = new Wunderlist('$username', 'password');
+
+// get profile
+$profile = $api->getProfile();
+
+// get lists
+$lists = $api->getLists();
+
+// get tasks
+$tasks = $api->getTasks();
 ```
 [see all examples](/examples/example.php) or check [the class](/src/Wunderlist.php)
 
 ## Based on
 
-This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but has been rewritten from the ground up to match the PSR-2-code-styling.
+This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but has been **rewritten from the ground up** to match the PSR-2-code-styling.
 
 ## Documentation
 
