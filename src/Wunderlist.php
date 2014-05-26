@@ -90,7 +90,7 @@ class Wunderlist
     /**
      * Delete list
      *
-     * @param string $listId
+     * @param  string $listId
      * @return bool
      */
     public function deleteList($listId)
@@ -99,13 +99,13 @@ class Wunderlist
         $result = $this->doCall($listId, null, 'DELETE');
 
         // if delete was successfull an empty result is return
-		return (is_array($result) && count($result) == 0);
+        return (is_array($result) && count($result) == 0);
     }
 
     /**
      * Delete task
      *
-     * @param string $taskId
+     * @param  string $taskId
      * @return bool
      */
     public function deleteTask($taskId)
@@ -114,7 +114,7 @@ class Wunderlist
         $result = $this->doCall($taskId, null, 'DELETE');
 
         // if delete was successfull an empty result is return
-		return (is_array($result) && count($result) == 0);
+        return (is_array($result) && count($result) == 0);
     }
 
     /**
@@ -168,9 +168,9 @@ class Wunderlist
             // define post method
             curl_setopt($curl, CURLOPT_POST, true);
         // method is DELETE
-		} elseif ($method == 'DELETE') {
-			curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');	
-		}
+        } elseif ($method == 'DELETE') {
+            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        }
 
         // execute
         $response = curl_exec($curl);
@@ -393,7 +393,7 @@ class Wunderlist
     /**
      * Insert list
      *
-     * @param string $title
+     * @param  string $title
      * @return array
      */
     public function insertList($title)
@@ -411,11 +411,11 @@ class Wunderlist
     /**
      * Insert task
      *
-     * @param string $title
-     * @param string $listId
-     * @param string $parentId[optional]
-     * @param string $dueDate[optional]
-     * @param bool $starred[optional]
+     * @param  string $title
+     * @param  string $listId
+     * @param  string $parentId[optional]
+     * @param  string $dueDate[optional]
+     * @param  bool   $starred[optional]
      * @return array
      */
     public function insertTask($title, $listId, $parentId = null, $dueDate = null, $starred = false)
