@@ -6,7 +6,7 @@
 
 ```
 // define API
-$api = new Wunderlist('$username', 'password');
+$api = new Wunderlist('username', 'password');
 
 // get profile
 $profile = $api->getProfile();
