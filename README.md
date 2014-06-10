@@ -19,7 +19,7 @@ This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PEND
 ```
 > Adding this code in your `composer.json` file will get the latest version using [Composer](https://getcomposer.org).
 
-* Check [in Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
+Check [Packagist package](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
 
 ### Example
 ```
@@ -40,8 +40,7 @@ $tasks = $api->getTasks();
 
 // ...
 ```
-* Check [the Wunderlist class source](/src/Wunderlist.php)
-* [View all examples](/examples/example.php).
+Check [the Wunderlist class source](/src/Wunderlist.php) or [View all examples](/examples/example.php).
 
 ## Documentation
 
