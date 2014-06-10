@@ -11,6 +11,7 @@ This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PEND
 ### Installation
 
 > Adding this code in your `composer.json` file will get the latest version using [Composer](https://getcomposer.org).
+
 ``` json
 {
     "require": {
