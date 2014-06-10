@@ -4,11 +4,11 @@
 
 This Wunderlist PHP Class connects to the Wunderlist API and has all functions implemented to insert/update/delete lists, tasks, reminders, files, notes, ...
 
-## Based on
-
 This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but I've **rewritten it from the ground up** to match the latest PHP PSR-code-stylings. Works perfectly using Composer.
 
-## Installing using Composer
+## Usage
+
+### Installation
 
 Add the following code to your `composer.json` file to retrieve the latest version using [Composer](https://getcomposer.org).
 
@@ -21,7 +21,7 @@ Add the following code to your `composer.json` file to retrieve the latest versi
 ```
 Check [in Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
 
-## Usage example
+### Example
 ```
 // required to load (only when not using an autoloader)
 require_once __DIR__ . '/src/Wunderlist.php';
