@@ -21,7 +21,7 @@ This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PEND
 }
 ```
 
-> Add in `composer.json` file when using [Composer](https://getcomposer.org).
+> Add the above in your `composer.json` file when using [Composer](https://getcomposer.org).
 
 ### Example
 ```
