@@ -40,7 +40,7 @@ $tasks = $api->getTasks();
 // ...
 ```
 
-> Check [the Wunderlist class source](/src/Wunderlist.php) or [View all examples](/examples/example.php).
+> [View all examples](/examples/example.php) or check [the Wunderlist class](/src/Wunderlist.php).
 
 ## Documentation
 
