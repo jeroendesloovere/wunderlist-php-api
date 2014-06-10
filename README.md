@@ -1,7 +1,7 @@
 # Wunderlist PHP Class
 [![Latest Stable Version](http://img.shields.io/packagist/v/jeroendesloovere/wunderlist-php-api.svg)](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/jeroendesloovere/wunderlist-php-api/blob/master/LICENSE)
-![Build Status](http://img.shields.io/travis/jeroendesloovere/wunderlist-php-api.svg?branch=master)
+[![Build Status](https://travis-ci.org/jeroendesloovere/wunderlist-php-api.svg?branch=master)](https://travis-ci.org/jeroendesloovere/wunderlist-php-api)
 
 > Wunderlist is a to-do-task app with lots of possibilities. Lists can be created with tasks, sub-tasks, reminders, files and notes. Lists, tasks and sub-tasks can be re-arranged. Lists can be shared with other users and tasks can be starred.
 
