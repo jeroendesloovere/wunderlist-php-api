@@ -1,7 +1,6 @@
 # Wunderlist PHP Class
 [![Latest Stable Version](http://img.shields.io/packagist/v/jeroendesloovere/wunderlist-php-api.svg)](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api)
 [![License](http://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/jeroendesloovere/wunderlist-php-api/blob/master/LICENSE)
-[![Total Downloads](http://img.shields.io/packagist/dm/jeroendesloovere/wunderlist-php-api.svg)](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api)
 [![Build Status](http://img.shields.io/travis/jeroendesloovere/wunderlist-php-api.svg)](https://travis-ci.org/jeroendesloovere/wunderlist-php-api)
 
 > Wunderlist is a to-do-task app with lots of possibilities. Lists can be created with tasks, sub-tasks, reminders, files and notes. Lists, tasks and sub-tasks can be re-arranged. Lists can be shared with other users and tasks can be starred.
@@ -22,7 +21,7 @@ This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PEND
 }
 ```
 
-> Adding this code in your `composer.json` file will get the [latest Wunderlist Packagist package](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api) using [Composer](https://getcomposer.org).
+> Add in `composer.json` file when using [Composer](https://getcomposer.org).
 
 ### Example
 ```
