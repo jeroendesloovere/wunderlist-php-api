@@ -10,8 +10,6 @@ This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PEND
 
 ### Installation
 
-Add the following code to your `composer.json` file to retrieve the latest version using [Composer](https://getcomposer.org).
-
 ``` json
 {
     "require": {
@@ -19,7 +17,6 @@ Add the following code to your `composer.json` file to retrieve the latest versi
     }
 }
 ```
-Check [in Packagist](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api).
 
 ### Example
 ```
