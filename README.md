@@ -6,14 +6,13 @@ This Wunderlist PHP Class connects to the Wunderlist API and has all functions i
 
 ## Based on
 
-This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but has been **rewritten from the ground up** to match the latest PHP PSR-code-stylings. Works perfectly using Composer.
+This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PENDOnl/Wunderlist2-PHP-Wrapper), but I've **rewritten it from the ground up** to match the latest PHP PSR-code-stylings. Works perfectly using Composer.
 
 ## Installing
 
 ### Using Composer
 
-When using [Composer](https://getcomposer.org) you can always load in the latest version.
-Add the :package_name package to your `composer.json` file.
+Add the following code to your `composer.json` file to retrieve the latest version using [Composer](https://getcomposer.org).
 
 ``` json
 {
