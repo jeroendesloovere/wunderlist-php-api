@@ -18,7 +18,7 @@ This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PEND
 }
 ```
 
-> Adding this code in your `composer.json` file will get the [latest Packagist package](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api) using [Composer](https://getcomposer.org).
+> Adding this code in your `composer.json` file will get the [latest Wunderlist Packagist package](https://packagist.org/packages/jeroendesloovere/wunderlist-php-api) using [Composer](https://getcomposer.org).
 
 ### Example
 ```
