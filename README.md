@@ -24,7 +24,7 @@ This class is based on [PENDOnl/Wunderlist2-PHP-Wrapper](https://github.com/PEND
 > Add the above in your `composer.json` file when using [Composer](https://getcomposer.org).
 
 ### Example
-```
+``` php
 // required to load (only when not using an autoloader)
 require_once __DIR__ . '/src/Wunderlist.php';
 
