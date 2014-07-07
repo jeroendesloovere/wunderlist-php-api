@@ -298,16 +298,6 @@ class Wunderlist
     }
 
     /**
-     * Get shares
-     *
-     * @return array
-     */
-    public function getShares()
-    {
-        return $this->doCall('me/shares');
-    }
-
-    /**
      * Get settings
      *
      * @return array
@@ -315,6 +305,16 @@ class Wunderlist
     public function getSettings()
     {
         return $this->doCall('me/settings');
+    }
+
+    /**
+     * Get shares
+     *
+     * @return array
+     */
+    public function getShares()
+    {
+        return $this->doCall('me/shares');
     }
 
     /**
