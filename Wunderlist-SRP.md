@@ -33,6 +33,18 @@ class Wunderlist
 
 class Service
 {
+    public function __construct($apiKey, $apiSecret)
+    {
+        
+    }
+}
+```
+
+``` php
+<?php
+
+class Base
+{
     protected $service;
 
     public function __construct(Service $service)
@@ -45,14 +57,14 @@ class Service
 ``` php
 <?php
 
-class Authentication extends Service
+class Authentication extends Base
 {
 }
 
 ``` php
 <?php
 
-class List extends Service
+class List extends Base
 {
     public function delete($listId)
     {
