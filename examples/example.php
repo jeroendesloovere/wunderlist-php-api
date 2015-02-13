@@ -19,7 +19,7 @@ use JeroenDesloovere\Wunderlist\Wunderlist;
 // define API
 $api = new Wunderlist(
     WUNDERLIST_CLIENT_ID,
-    WUNDERLIST_OAUTH_TOKEN
+    WUNDERLIST_CLIENT_SECRET
 );
 
 //$api->authorize();

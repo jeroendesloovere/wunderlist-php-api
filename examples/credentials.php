@@ -2,11 +2,11 @@
 
 // define your own credentials
 const WUNDERLIST_CLIENT_ID = ''; // required
-const WUNDERLIST_OAUTH_TOKEN = ''; // required
+const WUNDERLIST_CLIENT_SECRET = ''; // required
 
 // throw error
-if (empty(WUNDERLIST_OAUTH_TOKEN) ||
+if (empty(WUNDERLIST_CLIENT_SECRET) ||
     empty(WUNDERLIST_CLIENT_ID)
 ) {
-    echo 'Please define your OAUTH_TOKEN and CLIENT_ID in ' . __DIR__ . '/credentials.php';
+    echo 'Please define your CLIENT_ID & CLIENT_SECRET in ' . __DIR__ . '/credentials.php';
 }

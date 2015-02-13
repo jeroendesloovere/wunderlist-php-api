@@ -28,7 +28,7 @@ class CacheTest extends \PHPUnit_Framework_TestCase
 
         $this->api = new Wunderlist(
             WUNDERLIST_CLIENT_ID,
-            WUNDERLIST_OAUTH_TOKEN
+            WUNDERLIST_CLIENT_SECRET
         );
     }
 
