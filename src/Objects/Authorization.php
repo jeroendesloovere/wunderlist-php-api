@@ -20,6 +20,8 @@ class Authorization extends Object
 {
     /**
      * Get code - Authorize step 1
+     *
+     * @param string $redirectUrl
      */
     protected function getCode($redirectUrl)
     {
@@ -43,6 +45,9 @@ class Authorization extends Object
 
     /**
      * Get access token - Authorize step 2: we exchange our code for an access token
+     *
+     * @param string $redirectUrl
+     * @param string $code
      */
     protected function getAccessToken(
         $redirectUrl,
