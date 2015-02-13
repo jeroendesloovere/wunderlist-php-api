@@ -1,10 +1,12 @@
 <?php
 
 // define your own credentials
-$username = ''; // required
-$password = ''; // required
+const WUNDERLIST_CLIENT_ID = ''; // required
+const WUNDERLIST_OAUTH_TOKEN = ''; // required
 
 // throw error
-if (empty($username) || empty($password)) {
-    echo 'Please define your username and password in ' . __DIR__ . '/credentials.php';
+if (empty(WUNDERLIST_OAUTH_TOKEN) ||
+    empty(WUNDERLIST_CLIENT_ID)
+) {
+    echo 'Please define your OAUTH_TOKEN and CLIENT_ID in ' . __DIR__ . '/credentials.php';
 }
