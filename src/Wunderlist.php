@@ -29,9 +29,6 @@ class Wunderlist
     // API version
     const API_VERSION = 'v1';
 
-    // OAUTH URL
-    const OAUTH_URL = 'https://www.wunderlist.com/oauth/authorize';
-
     /**
      * Access token
      *

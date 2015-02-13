@@ -18,6 +18,10 @@ use JeroenDesloovere\Wunderlist\Objects\Object as Object;
  */
 class Authorization extends Object
 {
+    // OAUTH URLS
+    const OAUTH_URL_STEP_1 = 'https://www.wunderlist.com/oauth/authorize';
+    const OAUTH_URL_STEP_2 = 'https://www.wunderlist.com/oauth/access_token';
+
     /**
      * Get code - Authorize step 1
      *
@@ -37,7 +41,7 @@ class Authorization extends Object
         $parameters['state'] = $randomSecurityToken;
 
         // define url
-        $url = self::OAUTH_URL . '?' . http_build_query($parameters);
+        $url = self::OAUTH_URL_STEP_1 . '?' . http_build_query($parameters);
 
         // redirect
         // @todo
@@ -47,12 +51,31 @@ class Authorization extends Object
      * Get access token - Authorize step 2: we exchange our code for an access token
      *
      * @param string $redirectUrl
-     * @param string $code
+     * @param string $code The code you received from step one, ->getCode($redirectUrl);
      */
     protected function getAccessToken(
         $redirectUrl,
         $code
     ) {
+        // init parameters
+        $parameters = array();
+
+        // define parameters
+        $parameters['client_id'] = $this->api->getClientId();
+        $parameters['client_secret'] = $this->api->getClientSecret();
+        $parameters['code'] = $code;
+
+        // define url
+        $url = self::OAUTH_URL_STEP_2 . '?' . http_build_query($parameters);
+
+        // redirect
         // @todo
+        /*
+        // the response will look like this
+        {
+          "access_token": "976d16a81ccf621a654fcc23193b09498b220e89eb72ced3",
+          "token_type": "bearer"
+        }
+        */
     }
 }
