@@ -12,7 +12,7 @@
 require_once __DIR__ . '/credentials.php';
 
 // required to load (only when not using an autoloader)
-require_once __DIR__ . '/../src/Wunderlist.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use JeroenDesloovere\Wunderlist\Wunderlist;
 
