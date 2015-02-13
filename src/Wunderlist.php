@@ -7,7 +7,7 @@ namespace JeroenDesloovere\Wunderlist;
  * file that was distributed with this source code.
  */
 
-use JeroenDesloovere\Wunderlist\Exception;
+use JeroenDesloovere\Wunderlist\Exception as WunderlistException;
 
 /**
  * Wunderlist
