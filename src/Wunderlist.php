@@ -7,6 +7,8 @@ namespace JeroenDesloovere\Wunderlist;
  * file that was distributed with this source code.
  */
 
+use JeroenDesloovere\Wunderlist\Exception;
+
 /**
  * Wunderlist
  *
@@ -419,10 +421,3 @@ class Wunderlist
         return $this->doCall('me/tasks', $parameters, 'POST');
     }
 }
-
-/**
- * Wunderlist Exception
- *
- * @author Jeroen Desloovere <info@jeroendesloovere.be>
- */
-class WunderlistException extends \Exception {}
