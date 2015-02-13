@@ -3,11 +3,16 @@
 namespace JeroenDesloovere\Wunderlist;
 
 /*
+ * This file is part of the Wunderlist PHP class from Jeroen Desloovere.
+ *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
 
-use JeroenDesloovere\Wunderlist\Exception as WunderlistException;
+use JeroenDesloovere\Wunderlist\Exception;
+use JeroenDesloovere\Wunderlist\Objects\Authorization;
+use JeroenDesloovere\Wunderlist\Objects\Lists;
+use JeroenDesloovere\Wunderlist\Objects\Tasks;
 
 /**
  * Wunderlist
@@ -19,104 +24,73 @@ use JeroenDesloovere\Wunderlist\Exception as WunderlistException;
 class Wunderlist
 {
     // API URL
-    const API_URL = 'https://api.wunderlist.com';
+    const API_URL = 'https://a.wunderlist.com/api';
 
-    // internal constant to enable/disable debugging
-    const DEBUG = false;
+    // API version
+    const API_VERSION = 'v1';
 
-    // current class version
-    const VERSION = '1.0.0';
+    // OAUTH URL
+    const OAUTH_URL = 'https://www.wunderlist.com/oauth/authorize';
 
     /**
-     * Authorization token
+     * Access token
      *
      * @var string
      */
-    protected $authToken;
+    private $accessToken;
 
     /**
-     * The password that will be used for authenticating
+     * The curl connection
      *
      * @var string
      */
-    protected $password;
+    private $curl;
 
     /**
-     * The username/email that will be used for authenticating
+     * The client id that will be used for authenticating
      *
      * @var string
      */
-    protected $username;
+    private $clientId;
+
+    /**
+     * The client secret that you received when registering in Wunderlist.
+     *
+     * @var string
+     */
+    private $clientSecret;
 
     /**
      * Constructs the Wunderlist API
      *
-     * @param  string $username
-     * @param  string $password
+     * @param  string $clientId
+     * @param  string $clientSecret
+     * @param  string $accessToken
      * @return void
      */
-    public function __construct($username, $password)
-    {
+    public function __construct(
+        $clientId,
+        $clientSecret,
+        $accessToken = null
+    ) {
         // define credentials
-        $this->username = (string) $username;
-        $this->password = (string) $password;
+        $this->setClientId($clientId);
+        $this->setClientSecret($clientSecret);
 
-        // authenticate credentials
-        $this->authenticate();
-    }
+        // we have no access token, the user first needs to obtain this
+        // using ->authorize($redirectUrl); on the server
+        if ($this->accessToken !== null) {
+            // define access token
+            $this->setAccessToken($accessToken);
 
-    /**
-     * Authenticate credentials by logging in
-     */
-    protected function authenticate()
-    {
-        // init parameters
-        $parameters = array();
-
-        // build parameters
-        $parameters['email'] = $this->username;
-        $parameters['password'] = $this->password;
-
-        // login to check if credentials are correct
-        $response = $this->doCall('login', $parameters, 'POST');
-
-        if ($response) {
-            // define authorization token
-            $this->authToken = $response['token'];
-        } else {
-            // error
-            throw new WunderlistException('Could not Authenticate.');
+            // prepare our connection
+            $this->prepareConnection();
         }
-    }
 
-    /**
-     * Delete list
-     *
-     * @param  string $listId
-     * @return bool
-     */
-    public function deleteList($listId)
-    {
-        // delete list
-        $result = $this->doCall($listId, null, 'DELETE');
-
-        // if delete was successfull an empty result is return
-        return (is_array($result) && count($result) == 0);
-    }
-
-    /**
-     * Delete task
-     *
-     * @param  string $taskId
-     * @return bool
-     */
-    public function deleteTask($taskId)
-    {
-        // delete list
-        $result = $this->doCall($taskId, null, 'DELETE');
-
-        // if delete was successfull an empty result is return
-        return (is_array($result) && count($result) == 0);
+        // add all public variables
+        $this->authorization = new Authorization($this);
+        $this->lists = new Lists($this);
+        $this->tasks = new Tasks($this);
     }
 
     /**
@@ -127,72 +101,47 @@ class Wunderlist
      * @param  string $method[optional]
      * @return false  or array
      */
-    protected function doCall($endPoint, $parameters = array(), $method = 'GET')
-    {
-        // check if curl is available
-        if (!function_exists('curl_init')) {
-            throw new WunderlistException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
+    public function doCall(
+        $endPoint,
+        $parameters = array(),
+        $method = 'GET'
+    ) {
+        if ($this->getAccessToken() === null) {
+            throw new Exception('First you need to obtain an Access Token by executing $api->authorize($redirectUrl);');
         }
 
         // define url
-        $url = self::API_URL . '/' . $endPoint;
-
-        // init curl
-        $curl = curl_init();
+        $url = self::API_URL . '/' . self::API_VERSION . '/' . $endPoint;
 
         // set options
-        curl_setopt($curl, CURLOPT_URL, $url);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_TIMEOUT, 10);
-
-        // init headers
-        $headers = array();
-
-        // we have an authorization token
-        if (!empty($this->authToken)) {
-            // add to header
-            $headers[] = 'authorization: Bearer ' . $this->authToken;
-        }
-
-        // define headers with the request
-        if (!empty($headers)) {
-            // add headers
-            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
-        }
+        curl_setopt($this->curl, CURLOPT_URL, $url);
 
         // parameters are set
         if (!empty($parameters)) {
-            curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($parameters) );
+            curl_setopt($this->curl, CURLOPT_POSTFIELDS, http_build_query($parameters));
         }
 
         // method is POST, used for login or inserts
         if ($method == 'POST') {
             // define post method
-            curl_setopt($curl, CURLOPT_POST, true);
+            curl_setopt($this->curl, CURLOPT_POST, true);
         // method is DELETE
         } elseif ($method == 'DELETE') {
-            curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
+            curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
         }
 
         // execute
-        $response = curl_exec($curl);
-
-        // debug is on
-        if (self::DEBUG) {
-            echo $url . '<br/>';
-            print_r($response);
-            echo '<br/><br/>';
-        }
+        $response = curl_exec($this->curl);
 
         // get HTTP response code
-        $httpCode = (int) curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $httpCode = (int) curl_getinfo($this->curl, CURLINFO_HTTP_CODE);
 
         // close
-        curl_close($curl);
+        curl_close($this->curl);
 
         // response is empty or false
         if (empty($response)) {
-            throw new WunderlistException('Error: ' . $response);
+            throw new Exception('Error: ' . serialize($response));
         }
 
         // init result
@@ -208,216 +157,90 @@ class Wunderlist
     }
 
     /**
-     * Get events
+     * Get access token
      *
-     * @return array
+     * @return string
      */
-    public function getEvents()
+    public function getAccessToken()
     {
-        return $this->doCall('me/events');
+        return $this->accessToken;
     }
 
     /**
-     * Get friends
+     * Get client id
      *
-     * @return array
+     * @return string
      */
-    public function getFriends()
+    public function getClientId()
     {
-        return $this->doCall('me/friends');
+        return $this->clientId;
     }
 
     /**
-     * Get a list
+     * Get client secret
      *
-     * @param  string $listId
-     * @return array
+     * @return string
      */
-    public function getList($listId)
+    public function getClientSecret()
     {
-        return $this->doCall('me/' . $listId);
+        return $this->clientSecret;
     }
 
     /**
-     * Get shares for a list
-     *
-     * @param  string $listId
-     * @return array
+     * Prepare connection
      */
-    public function getListShares($listId)
+    private function prepareConnection()
     {
-        return $this->doCall('me/' . $listId . '/shares');
-    }
-
-    /**
-     * Get lists
-     *
-     * @return array
-     */
-    public function getLists()
-    {
-        return $this->doCall('me/lists');
-    }
-
-    /**
-     * Get profile from user
-     *
-     * @return array
-     */
-    public function getProfile()
-    {
-        return $this->doCall('me');
-    }
-
-    /**
-     * Get quota
-     *
-     * @return array
-     */
-    public function getQuota()
-    {
-        return $this->doCall('me/quota');
-    }
-
-    /**
-     * Get reminders
-     *
-     * @return array
-     */
-    public function getReminders()
-    {
-        return $this->doCall('me/reminders');
-    }
-
-    /**
-     * Get services
-     *
-     * @return array
-     */
-    public function getServices()
-    {
-        return $this->doCall('me/services');
-    }
-
-    /**
-     * Get settings
-     *
-     * @return array
-     */
-    public function getSettings()
-    {
-        return $this->doCall('me/settings');
-    }
-
-    /**
-     * Get shares
-     *
-     * @return array
-     */
-    public function getShares()
-    {
-        return $this->doCall('me/shares');
-    }
-
-    /**
-     * Get a task
-     *
-     * @param  string $taskId
-     * @return array
-     */
-    public function getTask($taskId)
-    {
-        return $this->doCall('me/' . $taskId);
-    }
-
-    /**
-     * Get messages for a task
-     *
-     * @param  string $taskId
-     * @return array
-     */
-    public function getTaskMessages($taskId)
-    {
-        return $this->doCall('me/' . $taskId . '/messages');
-    }
-
-    /**
-     * Get tasks
-     *
-     * @return array
-     */
-    public function getTasks()
-    {
-        return $this->doCall('me/tasks');
-    }
-
-    /**
-     * Get tasks from inbox
-     *
-     * @return array
-     */
-    public function getTasksFromInbox()
-    {
-        return $this->doCall('inbox/tasks');
-    }
-
-    /**
-     * Insert list
-     *
-     * @param  string $title
-     * @return array
-     */
-    public function insertList($title)
-    {
-        // init parameters
-        $parameters = array();
-
-        // build parameters
-        $parameters['title'] = (string) $title;
-
-        // insert list
-        return $this->doCall('me/lists', $parameters, 'POST');
-    }
-
-    /**
-     * Insert task
-     *
-     * @param  string $title
-     * @param  string $listId
-     * @param  string $parentId[optional]
-     * @param  string $dueDate[optional]
-     * @param  bool   $starred[optional]
-     * @return array
-     */
-    public function insertTask($title, $listId, $parentId = null, $dueDate = null, $starred = false)
-    {
-        // init parameters
-        $parameters = array();
-
-        // build parameters
-        $parameters['title'] = (string) $title;
-        $parameters['list_id'] = (string) $listId;
-        $parameters['starred'] = ((bool) $starred) ? 1 : 0;
-
-        // we have a parent id
-        if ($parentId !== null) {
-            // add to parameters
-            $parameters['parent_id'] = $parentId;
+        // check if curl is available
+        if (!function_exists('curl_init')) {
+            throw new Exception(
+                'This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.'
+            );
         }
 
-        // we have a due date
-        if ($dueDate !== null) {
-            // is no time
-            if (!strtotime($dueDate)) {
-                // throw error
-                throw new WunderlistException('Parameters dueDate is invalid.');
-            }
+        // init headers
+        $headers = array();
 
-            // add parameter
-            $parameters['due_date'] = date('Y-m-d', strtotime($dueDate));
-        }
+        // add to header
+        $headers[] = 'X-Client-ID: ' . $this->getClientId();
+        $headers[] = 'X-Access-Token: ' . $this->getAccessToken();
 
-        // return insert task
-        return $this->doCall('me/tasks', $parameters, 'POST');
+        // init curl
+        $this->curl = curl_init();
+
+        // set options for curl
+        curl_setopt($this->curl, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($this->curl, CURLOPT_TIMEOUT, 10);
+    }
+
+    /**
+     * Set access token
+     *
+     * @param string $value
+     */
+    public function setAccessToken($value)
+    {
+        $this->accessToken = (string) $value;
+    }
+
+    /**
+     * Set client id
+     *
+     * @param string $value
+     */
+    public function setClientId($value)
+    {
+        $this->clientId = (string) $value;
+    }
+
+    /**
+     * Set client secret
+     *
+     * @param string $value
+     */
+    public function setClientSecret($value)
+    {
+        $this->clientSecret = (string) $value;
     }
 }
