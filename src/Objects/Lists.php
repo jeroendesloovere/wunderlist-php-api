@@ -18,6 +18,8 @@ use JeroenDesloovere\Wunderlist\Objects\Object as Object;
  */
 class Lists extends Object
 {
+    const ENDPOINT_LISTS = 'lists';
+
     /**
      * Delete list
      *
@@ -27,7 +29,7 @@ class Lists extends Object
     public function delete($listId)
     {
         // delete list
-        $result = $this->api->doCall('lists/:' . $listId, null, 'DELETE');
+        $result = $this->api->doCall(self::ENDPOINT_LISTS . '/:' . $listId, null, 'DELETE');
 
         // if delete was successfull an empty result is return
         return (is_array($result) && count($result) == 0);
@@ -41,7 +43,7 @@ class Lists extends Object
      */
     public function get($listId)
     {
-        return $this->api->doCall('lists/:' . $listId);
+        return $this->api->doCall(self::ENDPOINT_LISTS . '/:' . $listId);
     }
 
     /**
@@ -51,7 +53,7 @@ class Lists extends Object
      */
     public function getAll()
     {
-        return $this->api->doCall('lists');
+        return $this->api->doCall(self::ENDPOINT_LISTS);
     }
 
     /**
@@ -69,6 +71,6 @@ class Lists extends Object
         $parameters['title'] = (string) $title;
 
         // insert list
-        return $this->api->doCall('lists', $parameters, 'POST');
+        return $this->api->doCall(self::ENDPOINT_LISTS, $parameters, 'POST');
     }
 }
